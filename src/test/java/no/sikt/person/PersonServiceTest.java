@@ -35,7 +35,7 @@ public class PersonServiceTest {
     }
 
     @Test
-    void shouldReturnUriAsIFieldWhenUriIsRequested() {
+    void shouldReturnUriAsIdFieldWhenUriIsRequested() {
         fail();
     }
 
