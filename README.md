@@ -17,7 +17,7 @@ Scenario Outline:
 ## Task breakdown
 
 Given an HTTP request GET https://example.org/person/1
-And the request returns data:
+And the request returns data equivalent to:
 ```
 {
   "id": "1",
@@ -25,7 +25,7 @@ And the request returns data:
   "dob": "1992-03-07"
 }
 ```
-Then the data is transformed to:
+Then the data is transformed to something equivalent to this JSON structure:
 ```
 {
   "id": "https://example.org/person/1",
