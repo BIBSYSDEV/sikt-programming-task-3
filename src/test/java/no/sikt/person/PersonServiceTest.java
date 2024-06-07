@@ -2,7 +2,6 @@ package no.sikt.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -20,7 +19,7 @@ public class PersonServiceTest {
           "dob": "1992-03-07"
         }
         """;
-    public static final ObjectMapper MAPPER = new ObjectMapper();
+
     private HttpClient httpClient;
 
     @BeforeEach
