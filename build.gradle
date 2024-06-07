@@ -1,5 +1,12 @@
 plugins {
     id 'java'
+    id 'checkstyle'
+    id 'pmd'
+    id 'jacoco'
+}
+
+compileJava {
+    options.release = 21
 }
 
 group = 'no.sikt'
@@ -18,4 +25,55 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    failFast = false
+    testLogging {
+        events 'skipped', 'passed', 'failed'
+    }
+}
+
+pmd {
+    toolVersion = '7.0.0'
+    ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
+    ruleSets = []
+    ignoreFailures = false
+}
+
+checkstyle {
+    toolVersion = '10.17.0'
+    configFile = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml').asFile()
+    showViolations = true
+    ignoreFailures = false
+    maxWarnings = 0
+}
+
+tasks.withType(Checkstyle).configureEach {
+    reports {
+        xml.required
+        html.required
+        html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
+    }
+}
+
+check.dependsOn jacocoTestCoverageVerification
+jacocoTestCoverageVerification.dependsOn(jacocoTestReport)
+
+jacocoTestCoverageVerification {
+
+    violationRules {
+        rule {
+            limit {
+                counter = 'METHOD'
+                value = 'COVEREDRATIO'
+                minimum = 1.000
+            }
+        }
+
+        rule {
+            limit {
+                counter = 'CLASS'
+                value = 'COVEREDRATIO'
+                minimum = 1.000
+            }
+        }
+    }
 }
